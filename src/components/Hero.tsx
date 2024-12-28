@@ -7,6 +7,19 @@ import { useState } from "react";
 
 
 export default function Hero() {
+    const [quantity, setQuantity] = useState<1 | 2 | 3>(1);
+  
+    // Price mapping based on quantity
+    const priceMapping: { 1: number; 2: number; 3: number } = {
+      1: 7.99,
+      2: 10.88,
+      3: 13.88
+    };
+  
+    // Handle quantity change
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setQuantity(parseInt(e.target.value) as 1 | 2 | 3);
+    };
 
     const [mainImage, setMainImage] = useState("/pic1.jpg");
 
@@ -43,30 +56,25 @@ export default function Hero() {
                     Saam Melasma Face Cream,
                     Skin Care Facial Moisturizer Face Cream For All Skin Types (1PC)</p>
                 <h2 className="text-blue-800 font-bold text-xl sm:text-2xl mt-4">PRICE</h2>
-                <div className="flex justify-center sm:justify-start gap-2 items-center">
-                    <p className="text-lg font-bold text-green-600"> 1PCS. $7.99 · 7 ;<br/> 2PCS. $10.88 · 10 ;<br/> 3PCS. $13.88</p>
-                   {/* <p className="text-sm line-through text-gray-600">$14.00</p>*/}
-                </div>
-
-                {/*<h2 className="text-black font-bold text-xl sm:text-2xl mt-4">SIZE:</h2>
-                <div className="flex justify-center sm:justify-start space-x-2 text-gray-400 mt-2">
-                    <div className="border border-green-500 h-8 w-8 text-center leading-8">S</div>
-                    <div className="border border-gray-500 h-8 w-8 text-center leading-8">M</div>
-                    <div className="border border-gray-500 h-8 w-8 text-center leading-8">L</div>
-                    <div className="border border-gray-500 h-8 w-8 text-center leading-8">XL</div>
-                    <div className="border border-gray-500 h-8 w-9 text-center leading-8 text-sm">2XL</div>
-                </div>
-
-                <div className="mt-3">
-                    <h1 className="text-2xl">Color: <span className="text-2xl font-bold text-gray-600">WHITE</span></h1>
-                    <div className="flex  mt-2 justify-center sm:justify-start items-center ">
-                        <div className="h-[25px] ml-2 w-[30px] border border-1px border-black bg-gray-300"></div>
-                        <div className="h-[25px] ml-2 w-[30px] bg-red-600"></div>
-                        <div className="h-[25px] ml-2 w-[30px] bg-blue-800"></div>
-                        <div className="h-[25px] ml-2 w-[30px] bg-yellow-500"></div>
-                        <div className="h-[25px] ml-2 w-[30px] bg-black"></div>
-                    </div>
-                </div>*/}
+               
+       {/* Quantity Dropdown */}
+       <div className="mt-4">
+        <label htmlFor="quantity" className="font-bold text-lg text-cyan-800">Select Quantity:</label>
+        <select
+          id="quantity"
+          value={quantity}
+          onChange={handleQuantityChange}
+          className="ml-2 p-2 border border-cyan-300 rounded"
+        >
+          <option value={1}>1 PCS</option>
+          <option value={2}>2 PCS</option>
+          <option value={3}>3 PCS</option>
+        </select>
+      </div>
+          {/* Total Price Display */}
+          <div className="mt-4">
+        <p className="font-bold text-lg text-green-800">Total Price:  ${priceMapping[quantity]}</p>
+      </div>
 
                 <h2 className="text-blue-800 font-bold mt-4 text-xl">DESCRIPTION:</h2>
                 <p className="text-gray-600 mt-2">
