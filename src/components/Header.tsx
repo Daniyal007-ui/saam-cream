@@ -10,17 +10,20 @@ export default function Header() {
         <Image
           src="/logo.jpg"
           alt="logo"
-          height={100}
-          width={100}
-          className="sm:pl-3 h-[60px] w-[200px] object-cover"
+          height={300}
+          width={300}
+          className="object-cover   h-[60px] sm:w-auto md:w-[200px] sm:pl-3"
         />
       </div>
 
-      {/* Right Section: Contact Us, Search, Cart, User */}
-      <div className="flex gap-6 items-center sm:flex-row flex-col sm:gap-6 ">
-        <p className="text-xl sm:text-2xl font-bold">Contact Us |</p>
+      {/* Right Section */}
+      <div className="flex gap-4  items-center sm:flex-row sm:gap-6">
+        <p className="md:text-xl sm:text-sm font-bold sm:whitespace-nowrap">
+          Contact Us 
+        </p>
 
-        <div className="flex gap-4 items-center">
+        {/* Icons - Visible on medium screens and above */}
+        <div className=" gap-4 items-center sm:gap-6 hidden sm:flex">
           <CiSearch className="h-6 w-6 cursor-pointer sm:h-8 sm:w-8" />
           <FaShoppingCart className="h-6 w-6 cursor-pointer sm:h-8 sm:w-8" />
           <FaRegUserCircle className="h-6 w-6 cursor-pointer sm:h-8 sm:w-8" />
