@@ -64,7 +64,7 @@ export default function Hero() {
           id="quantity"
           value={quantity}
           onChange={handleQuantityChange}
-          className="ml-2 p-2 border border-cyan-300 rounded"
+          className="ml-2 text-cyan-500 p-2 border border-cyan-300 rounded"
         >
           <option value={1}>1 PCS</option>
           <option value={2}>2 PCS</option>
