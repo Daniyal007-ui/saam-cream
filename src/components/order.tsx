@@ -18,7 +18,7 @@ export const OrderForm = () => {
     // Check if form.current is available
     if (form.current) {
       emailjs
-        .sendForm('service_ou6w3s6', 'template_0stkv2x', form.current, {
+        .sendForm('service_ou6w3s6', 'template_tjowngl', form.current, {
           publicKey: '18Og-v0vETJHiLyiI',
         })
         .then(
@@ -96,9 +96,9 @@ export const OrderForm = () => {
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-        </div> */}
+        </div> 
 
-        {/* Quantity Input */}
+        {/* Quantity Input 
         <div>
           <label className="block text-sm font-medium text-gray-700">Quantity</label>
           <input
@@ -108,11 +108,11 @@ export const OrderForm = () => {
             required
             className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
-        </div>
+        </div>*/}
 
         {/* Shipping Address Input */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Shipping Address</label>
+          <label className="block text-sm font-medium text-gray-700">City</label>
           <textarea
             name="shipping_address"
             required
@@ -122,7 +122,7 @@ export const OrderForm = () => {
 
         {/* Additional Instructions Input */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Additional Instructions</label>
+          <label className="block text-sm font-medium text-gray-700">Address</label>
           <textarea
             name="additional_instructions"
             className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
