@@ -39,7 +39,7 @@ export default function Hero() {
                     <div onClick={() => handleThumbnailClick("/pic2.jpg")} className="cursor-pointer">
                         <Image src={"/pic2.jpg"} alt="pic1" height={110} width={110} className="rounded-md" />
                     </div>
-                    <div onClick={() => handleThumbnailClick("/pic3.webp")} className="cursor-pointer">
+                    <div onClick={() => handleThumbnailClick("/pic3.jpg")} className="cursor-pointer">
                         <Image src={"/pic3.webp"} alt="pic2" height={100} width={100} className="rounded-md" />
                     </div>
                     <div onClick={() => handleThumbnailClick("/pic4.jpg")} className="cursor-pointer">
