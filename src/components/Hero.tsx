@@ -40,7 +40,7 @@ export default function Hero() {
                         <Image src={"/pic2.jpg"} alt="pic1" height={110} width={110} className="rounded-md" />
                     </div>
                     <div onClick={() => handleThumbnailClick("/pic3.jpg")} className="cursor-pointer">
-                        <Image src={"/pic3.webp"} alt="pic2" height={100} width={100} className="rounded-md" />
+                        <Image src={"/pic3.jpg"} alt="pic2" height={100} width={100} className="rounded-md" />
                     </div>
                     <div onClick={() => handleThumbnailClick("/pic4.jpg")} className="cursor-pointer">
                         <Image src={"/pic4.jpg"} alt="pic3" height={100} width={100} className="rounded-md" />
