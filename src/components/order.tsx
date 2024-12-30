@@ -10,6 +10,24 @@ export const OrderForm = () => {
   // State to manage the confirmation message visibility
   const [orderPlaced, setOrderPlaced] = useState(false);
 
+  // State to manage quantity and price
+  const [quantity, setQuantity] = useState(1); // Default quantity is 1
+
+  // Conditional pricing based on quantity
+  const getPrice = (quantity: number) => {
+    if (quantity === 1) {
+      return 160; // SAR 160 for 1 item
+    } else if (quantity === 2) {
+      return 250; // SAR 250 for 2 items
+    } else if (quantity === 3) {
+      return 350; // SAR 350 for 3 items
+    }
+    return 0; // Default price (you could handle this case as needed)
+  };
+
+  const pricePerItem = getPrice(quantity); // Get the price based on quantity
+  const totalPrice = pricePerItem; // Since the price is already set based on quantity
+
   // Handle form submission to send the order details via EmailJS
   const sendOrder = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,6 +35,11 @@ export const OrderForm = () => {
 
     // Check if form.current is available
     if (form.current) {
+      // Prepare the data to send to EmailJS including quantity and price
+      const formData = new FormData(form.current);
+      formData.append("quantity", String(quantity));  // Append quantity
+      formData.append("price", String(totalPrice));   // Append price
+
       emailjs
         .sendForm('service_ou6w3s6', 'template_tjowngl', form.current, {
           publicKey: '18Og-v0vETJHiLyiI',
@@ -33,10 +56,9 @@ export const OrderForm = () => {
             console.log('Order submission failed...', error.text);
           }
         );
+    } else {
+      console.error('Form reference is not available');
     }
-    else {
-        console.error('Form reference is not available');
-      }
   };
 
   return (
@@ -74,59 +96,41 @@ export const OrderForm = () => {
           </div>
         </div>
 
-        {/* Product Color Input 
-        <div className="flex flex-col sm:flex-row sm:space-x-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700">Color</label>
-            <input
-              type="text"
-              name="color"
-              required
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-       
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700">Size</label>
-            <input
-              type="text"
-              name="size"
-              required
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-        </div> 
-
-        {/* Quantity Input 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Quantity</label>
-          <input
-            type="number"
-            name="quantity"
-            min="1"
-            required
-            className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>*/}
-
         {/* Shipping Address Input */}
         <div>
           <label className="block text-sm font-medium text-gray-700">City</label>
-          <textarea
-            name="shipping_address"
+          <input
+            name="user_city"
             required
             className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          ></textarea>
+          />
         </div>
 
         {/* Additional Instructions Input */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Address</label>
           <textarea
-            name="additional_instructions"
+            name="user_address"
             className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           ></textarea>
+        </div>
+
+        {/* Quantity and Price Section */}
+        <div className="flex justify-between items-center mt-4">
+          <div className="flex items-center space-x-4">
+            <label className="text-sm font-medium text-gray-700">Quantity</label>
+            <input
+              type="number"
+              name="quantity"
+              min="1"
+              max="3" // Limit the quantity to 3 as per your pricing rules
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              className="w-20 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            />
+          </div>
+          <div className="text-sm font-medium text-gray-700">Price: SAR {pricePerItem}</div>
+          <div className="text-sm font-medium text-gray-700">Total: SAR {totalPrice}</div>
         </div>
 
         {/* Submit Button */}

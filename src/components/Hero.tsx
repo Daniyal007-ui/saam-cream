@@ -11,9 +11,9 @@ export default function Hero() {
   
     // Price mapping based on quantity
     const priceMapping: { 1: number; 2: number; 3: number } = {
-      1: 7.99,
-      2: 10.88,
-      3: 13.88
+      1: 160,
+      2: 250,
+      3: 350
     };
   
     // Handle quantity change
@@ -37,13 +37,13 @@ export default function Hero() {
                 </div>
                 <div className="flex space-x-3 mb-2 md:ml-5 sm:mb-0 sm:ml-0">
                     <div onClick={() => handleThumbnailClick("/pic2.jpg")} className="cursor-pointer">
-                        <Image src={"/pic2.jpg"} alt="pic1" height={110} width={110} className="rounded-md" />
+                        <Image src={"/pic2.jpg"} alt="pic1" height={200} width={200} className="rounded-md" />
                     </div>
                     <div onClick={() => handleThumbnailClick("/pic3.jpg")} className="cursor-pointer">
-                        <Image src={"/pic3.jpg"} alt="pic2" height={100} width={100} className="rounded-md" />
+                        <Image src={"/pic3.jpg"} alt="pic2" height={200} width={200} className="rounded-md" />
                     </div>
                     <div onClick={() => handleThumbnailClick("/pic4.jpg")} className="cursor-pointer">
-                        <Image src={"/pic4.jpg"} alt="pic3" height={100} width={100} className="rounded-md" />
+                        <Image src={"/pic4.jpg"} alt="pic3" height={200} width={200} className="rounded-md" />
                     </div>
                 </div>
             </div>
@@ -51,10 +51,9 @@ export default function Hero() {
             {/* Product Info Section */}
             <div className="w-full sm:w-1/3 text-center sm:text-left sm:ml-6 mb-6 sm:mb-0">
                 <h1 className=" font-bold text-2xl sm:text-3xl text-blue-800">SAAM CREAM</h1>
-                <p className="text-xl text-gray-600 mt-2">Saam Cream,Saam Face Cream,
-                    Saam Renewal Face Cream,
-                    Saam Melasma Face Cream,
-                    Skin Care Facial Moisturizer Face Cream For All Skin Types (1PC)</p>
+                <p className="text-xl text-gray-600 mt-2">
+                Don&apos;t miss Renewal Face Cream if you want to have flawless skin
+                    </p>
                 <h2 className="text-blue-800 font-bold text-xl sm:text-2xl mt-4">PRICE</h2>
                
        {/* Quantity Dropdown */}
@@ -73,27 +72,19 @@ export default function Hero() {
       </div>
           {/* Total Price Display */}
           <div className="mt-4">
-        <p className="font-bold text-lg text-green-800">Total Price:  ${priceMapping[quantity]}</p>
+        <p className="font-bold text-lg text-green-800">Total Price:  {priceMapping[quantity]} SAR</p>
       </div>
 
                 <h2 className="text-blue-800 font-bold mt-4 text-xl">DESCRIPTION:</h2>
                 <p className="text-gray-600 mt-2">
-                    ✓ Saam is a premium product.
-                    · Use it every night before going to bed.
-                    · Wash your face thoroughly then use a
-                    sufficient amount of cream to apply
-                    evenly on the ...<br/>
-                    Specification:<br/>
-                    Name: Saam Face Cream.<br/>
-                    Net: 20g<br/>
-                    Shelf Life: 3 years<br/>
-                    Package Includes:
-                    1/2/3pcs * Saam Face Cream
+                product of SAAM Cosmetics, best seller in Saudi Arabia and UAE.
+                     It can treat all long-term skin problems such as melasma, freckles, age spots, 
+                    and dark spots. Experience this face cream product of SAAM!
                 </p>
 
                 <div className="w-auto mt-2 border border-1px border-gray-300"></div>
                 <p className="mt-2 text-cyan-700">2.9(11) · AED 161.00 · ‎In stock.</p>
-                <p>⭐⭐⭐⭐⭐ |2.9 Rating| 120 reviews.</p>
+                <p>⭐⭐⭐⭐⭐ |2.9 Rating.</p>
             </div>
 
             {/* Order Form Section */}
