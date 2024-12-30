@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import TopHeader from "@/components/Top-Header";
 
 
 
@@ -7,6 +8,7 @@ import Hero from "@/components/Hero";
 export default function Home() {
   return (
  <>
+ <TopHeader/>
  <Header/>
  <Hero/>
 
