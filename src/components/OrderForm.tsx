@@ -73,7 +73,7 @@ const OrderForm = () => {
   return (
     <div className="max-w-lg mx-auto p-4">
       <h2 className="text-xl text-center underline font-bold mb-4">Order Form</h2>
-      {formSubmitted && <div className="text-green-500 mb-4">Thank you for your order!</div>}
+      {formSubmitted && <div className="text-green-700 mb-4">Thank you for placing an order.Our team will contact you for order confirmed</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="name" className="font-semibold">Name</label>
@@ -156,7 +156,7 @@ const OrderForm = () => {
         </div>
 
         <div>
-          <button type="submit" className="w-full bg-cyan-500 text-white p-2 rounded mt-4">Place Order</button>
+          <button type="submit" className="w-full bg-cyan-500 border border-black text-white p-2 rounded mt-4">Place Order</button>
         </div>
       </form>
     </div>
