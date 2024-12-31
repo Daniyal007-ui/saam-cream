@@ -2,8 +2,8 @@
 
 
 import Image from "next/image";
-import { OrderForm } from "./order";
 import { useState } from "react";
+import Order from "./Order";
 
 
 export default function Hero() {
@@ -84,11 +84,11 @@ export default function Hero() {
 
                 <div className="w-auto mt-2 border border-1px border-gray-300"></div>
                 <p className="mt-2 text-cyan-700">2.9(11) · AED 161.00 · ‎In stock.</p>
-                <p>⭐⭐⭐⭐⭐ |2.9 Rating.</p>
+               
             </div>
 
             {/* Order Form Section */}
-            <OrderForm />
+            <Order/>
         </div>
     );
 }

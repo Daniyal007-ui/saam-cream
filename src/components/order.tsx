@@ -1,148 +1,166 @@
 'use client'
 
-import React, { useRef, useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 
-export const OrderForm = () => {
-  // Define the ref for the form element
-  const form = useRef<HTMLFormElement | null>(null);
+const Order = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    contact: '',
+    city: '',
+    address: '',
+    quantity: 1,
+    price: 160,
+  });
+  const [formSubmitted, setFormSubmitted] = useState(false);  // Track form submission status
 
-  // State to manage the confirmation message visibility
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
-  // State to manage quantity and price
-  const [quantity, setQuantity] = useState(1); // Default quantity is 1
-
-  // Conditional pricing based on quantity
-  const getPrice = (quantity: number) => {
-    if (quantity === 1) {
-      return 160; // SAR 160 for 1 item
-    } else if (quantity === 2) {
-      return 250; // SAR 250 for 2 items
-    } else if (quantity === 3) {
-      return 350; // SAR 350 for 3 items
+    if (name === 'quantity') {
+      let price = 160;
+      if (value === '2') price = 250;
+      if (value === '3') price = 350;
+      setFormData((prev) => ({
+        ...prev,
+        price,
+      }));
     }
-    return 0; // Default price (you could handle this case as needed)
   };
 
-  const pricePerItem = getPrice(quantity); // Get the price based on quantity
-  const totalPrice = pricePerItem; // Since the price is already set based on quantity
-
-  // Handle form submission to send the order details via EmailJS
-  const sendOrder = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("Form Submitted Successfully!");
 
-    // Check if form.current is available
-    if (form.current) {
-      // Prepare the data to send to EmailJS including quantity and price
-      const formData = new FormData(form.current);
-      formData.append("quantity", String(quantity));  // Append quantity
-      formData.append("price", String(totalPrice));   // Append price
+    // Construct template parameters
+    const templateParams = {
+      name: formData.name,
+      contact: formData.contact,
+      city: formData.city,
+      address: formData.address,
+      quantity: formData.quantity,
+      price: formData.price,
+    };
 
-      emailjs
-        .sendForm('service_ou6w3s6', 'template_tjowngl', form.current, {
-          publicKey: '18Og-v0vETJHiLyiI',
-        })
-        .then(
-          () => {
-            console.log('Order submitted successfully!');
-            // Show the confirmation message
-            setOrderPlaced(true);
-            // Optionally reset the form after submission
-            form.current!.reset();
-          },
-          (error) => {
-            console.log('Order submission failed...', error.text);
-          }
-        );
-    } else {
-      console.error('Form reference is not available');
-    }
+    // Send the email using EmailJS
+    emailjs.send('service_ou6w3s6', 'template_tjowngl', templateParams, '18Og-v0vETJHiLyiI')
+      .then(
+        (response) => {
+            console.log("order submitted",response)
+          alert('Order received! A confirmation email has been sent.');
+          setFormSubmitted(true);  // Set form submission to true
+          
+          // Reset form after successful submission
+          setFormData({
+            name: '',
+            contact: '',
+            city: '',
+            address: '',
+            quantity: 1,
+            price: 160,
+          });
+        },
+        (error) => {
+            console.log("fail to submitted",error)
+          alert('Failed to send email. Please try again later.');
+        }
+      );
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-cyan-100 shadow-lg rounded-lg mt-8">
-      {orderPlaced && (
-        <div className="mb-4 p-4 bg-green-100 text-green-800 rounded-md border border-green-400">
-          <p className="text-center text-lg font-semibold">Thank you! Your order has been placed successfully.</p>
-        </div>
-      )}
-
-      <form ref={form} onSubmit={sendOrder} className="space-y-4">
-        <h2 className="text-2xl font-bold text-green-400 underline text-center">Order Form</h2>
-
-        {/* Name Input */}
-        <div className="flex flex-col sm:flex-row sm:space-x-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700">Name</label>
-            <input
-              type="text"
-              name="user_name"
-              required
-              className="mt-1 block w-full p-2 text-black border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-
-          {/* Contact Number Input */}
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700">Contact Number</label>
-            <input
-              type="tel"
-              name="user_contact"
-              required
-              className="mt-1 block w-full text-black p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-        </div>
-
-        {/* Shipping Address Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">City</label>
+    <div className="max-w-lg mx-auto p-4">
+      <h2 className="text-xl font-bold mb-4">Order Form</h2>
+      {formSubmitted && <div className="text-green-500 mb-4">Thank you for your order!</div>}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex flex-col">
+          <label htmlFor="name" className="font-semibold">Name</label>
           <input
-            name="user_city"
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
             required
-            className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="border p-2 rounded"
+          />
+        </div>
+        
+        <div className="flex flex-col">
+          <label htmlFor="contact" className="font-semibold">Contact</label>
+          <input
+            type="text"
+            id="contact"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
           />
         </div>
 
-        {/* Additional Instructions Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Address</label>
-          <textarea
-            name="user_address"
-            className="mt-1 block w-full p-2 border text-black border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          ></textarea>
+        <div className="flex flex-col">
+          <label htmlFor="city" className="font-semibold">City</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
+          />
         </div>
 
-        {/* Quantity and Price Section */}
-        <div className="flex justify-between items-center mt-4">
-          <div className="flex items-center space-x-4">
-            <label className="text-sm font-medium text-gray-700">Quantity</label>
-            <input
-              type="number"
-              name="quantity"
-              min="1"
-              max="3" // Limit the quantity to 3 as per your pricing rules
-              value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
-              className="w-20 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-          </div>
-          <div className="text-sm font-medium text-gray-700">Price: SAR {pricePerItem}</div>
-          <div className="text-sm font-medium text-gray-700">Total: SAR {totalPrice}</div>
+        <div className="flex flex-col">
+          <label htmlFor="address" className="font-semibold">Address</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
+          />
         </div>
 
-        {/* Submit Button */}
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="w-full sm:w-auto mt-4 px-6 py-2 bg-green-400 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+        <div className="flex flex-col">
+          <label htmlFor="quantity" className="font-semibold">Quantity</label>
+          <select
+            id="quantity"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            required
+            className="border p-2 rounded"
           >
-            Place Order
-          </button>
+            <option value="1">1 Piece</option>
+            <option value="2">2 Pieces</option>
+            <option value="3">3 Pieces</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="price" className="font-semibold">Price</label>
+          <input
+            type="text"
+            id="price"
+            name="price"
+            value={`${formData.price} SAR`}
+            readOnly
+            className="border p-2 rounded bg-gray-200"
+          />
+        </div>
+
+        <div>
+          <button type="submit" className="w-full bg-cyan-500 text-white p-2 rounded mt-4">Submit Order</button>
         </div>
       </form>
     </div>
   );
 };
+
+export default Order;
