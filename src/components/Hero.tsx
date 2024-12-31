@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import Order from "./Order";
+import OrderForm from "./OrderForm";
 
 
 export default function Hero() {
@@ -88,7 +88,7 @@ export default function Hero() {
             </div>
 
             {/* Order Form Section */}
-            <Order/>
+            <OrderForm/>
         </div>
     );
 }

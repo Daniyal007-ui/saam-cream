@@ -3,7 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import emailjs from '@emailjs/browser';
 
-const Order = () => {
+const OrderForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     contact: '',
@@ -163,4 +163,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default OrderForm;
